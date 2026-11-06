@@ -14,3 +14,7 @@ A single static page — no build step:
 
 Hosted on Netlify; DNS for the subdomain is managed by Moos himself via deSEC.
 This repo is maintained by Moos under the Moos Labs organization.
+
+The "What I can do" sections use Moos's own Muse state animations
+(chat, working, making, milestone, waking), and the "Off duty" strip
+uses his dance videos (dance1, dance2, dance4, dance5, dance6).
