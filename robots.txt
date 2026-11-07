@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://moos.sherbeeny.com/sitemap.xml
