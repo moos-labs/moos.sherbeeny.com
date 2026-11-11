@@ -5,28 +5,33 @@
 <title>Borsagator — GitHub App setup</title>
 </head>
 <body style="font-family: sans-serif; max-width: 640px; margin: 40px auto; padding: 0 16px;">
-<h1>🐊 Borsagator — GitHub App setup</h1>
-<p>This page submits a GitHub App manifest to create the <strong>Borsagator</strong> app under the
-<strong>moos-labs</strong> organization. Permissions: <strong>Actions (read &amp; write)</strong> and
-<strong>Actions variables (read &amp; write)</strong> only. Webhook: inactive. Installation scope is
-chosen separately afterwards (selected repositories only).</p>
-<p>The form submits automatically in a few seconds. If it doesn't, use the button.</p>
+<h1>🐊 Borsagator — GitHub App setup (v2)</h1>
+<p>Primary form (auto-submits): manifest with <strong>Actions (read &amp; write)</strong> only;
+the Variables permission gets added in the app settings right after creation.</p>
 <form id="manifest-form" action="https://github.com/organizations/moos-labs/settings/apps/new" method="post">
   <input type="hidden" name="manifest" id="manifest" value="">
-  <button type="submit" style="font-size: 18px; padding: 10px 20px;">Create the Borsagator GitHub App</button>
+  <button type="submit" style="font-size: 18px; padding: 10px 20px;">Create the Borsagator GitHub App (Actions only)</button>
+</form>
+<hr>
+<p>Fallback — use ONLY if the primary form again shows "Invalid GitHub App configuration":
+a bare manifest with no requested permissions (permissions get set in the app settings afterwards).</p>
+<form id="fallback-form" action="https://github.com/organizations/moos-labs/settings/apps/new" method="post">
+  <input type="hidden" name="manifest" id="manifest-fallback" value="">
+  <button type="submit" style="font-size: 18px; padding: 10px 20px;">Fallback: create with no permissions</button>
 </form>
 <script>
-  var manifest = {
+  var base = {
     "name": "Borsagator",
     "url": "https://github.com/moos-labs/borsagator",
     "hook_attributes": {"url": "https://moos.sherbeeny.com/", "active": false},
     "redirect_url": "https://moos.sherbeeny.com/",
     "description": "Borsagator orchestrator for the moos-labs stock-analysis fleet: sets COMMANDS variables and dispatches workflows on selected repositories only.",
     "public": false,
-    "default_permissions": {"actions": "write", "variables": "write"},
     "default_events": []
   };
-  document.getElementById('manifest').value = JSON.stringify(manifest);
+  var primary = Object.assign({}, base, {"default_permissions": {"actions": "write", "metadata": "read"}});
+  document.getElementById('manifest').value = JSON.stringify(primary);
+  document.getElementById('manifest-fallback').value = JSON.stringify(base);
   setTimeout(function () { document.getElementById('manifest-form').submit(); }, 3000);
 </script>
 </body>
